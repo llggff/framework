@@ -8,35 +8,40 @@
 	<artifactId>framework-message-demo</artifactId>
 	<name>message demo</name>
 	<dependencies>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.hbasesoft.framework</groupId> -->
+<!-- 			<artifactId>framework-message-kafka</artifactId> -->
+<!-- 			<version>${project.parent.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.hbasesoft.framework</groupId> -->
+<!-- 			<artifactId>framework-message-redis</artifactId> -->
+<!-- 			<version>${project.parent.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.hbasesoft.framework</groupId> -->
+<!-- 			<artifactId>framework-message-rocketMQ</artifactId> -->
+<!-- 			<version>${project.parent.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.hbasesoft.framework</groupId>
-			<artifactId>framework-message-kafka</artifactId>
+			<artifactId>framework-message-delay-cache</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.hbasesoft.framework</groupId>
-			<artifactId>framework-message-redis</artifactId>
+			<artifactId>framework-message-simple</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.hbasesoft.framework</groupId> -->
+<!-- 			<artifactId>framework-cache-redis</artifactId> -->
+<!-- 			<version>${project.parent.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>com.hbasesoft.framework</groupId>
-			<artifactId>framework-message-rocketMQ</artifactId>
+			<artifactId>framework-cache-simple</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.hbasesoft.framework</groupId>
-			<artifactId>framework-message-delay-db</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.hbasesoft.framework</groupId>
-			<artifactId>framework-cache-redis</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.rocketmq</groupId>
-			<artifactId>rocketmq-client</artifactId>
-			<version>4.1.0-incubating</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

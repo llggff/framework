@@ -5,8 +5,11 @@
  ****************************************************************************************/
 package com.hbasesoft.framework.message.core.event;
 
+import com.hbasesoft.framework.common.utils.CommonUtil;
 import com.hbasesoft.framework.common.utils.bean.SerializationUtil;
 import com.hbasesoft.framework.common.utils.logger.LoggerUtil;
+import com.hbasesoft.framework.common.utils.logger.TransManager;
+import com.hbasesoft.framework.log.core.TransLogUtil;
 import com.hbasesoft.framework.message.core.MessageSubscriber;
 
 /**
@@ -46,7 +49,26 @@ public interface EventLinsener extends MessageSubscriber {
     default void onMessage(String channel, byte[] data) {
         EventData eventData = SerializationUtil.unserial(EventData.class, data);
         LoggerUtil.info("[{0}]接收到[event={1},data={2}]事件", Thread.currentThread().getId(), channel, eventData);
-        onEmmit(channel, eventData);
+
+        String transId = eventData == null ? CommonUtil.getTransactionID() : eventData.getEventId();
+        TransManager manager = TransManager.getInstance();
+        manager.push(transId, System.currentTimeMillis());
+
+        String methodName = this.getClass().getName() + "<onMessage>";
+
+        try {
+            TransLogUtil.before(methodName, new Object[] {
+                channel, eventData
+            });
+            onEmmit(channel, eventData);
+            TransLogUtil.afterReturning(methodName, null);
+        }
+        catch (Exception e) {
+            TransLogUtil.afterThrowing(methodName, e);
+        }
+        finally {
+            manager.pop();
+        }
     }
 
     /**

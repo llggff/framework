@@ -14,7 +14,6 @@ import com.hbasesoft.framework.message.core.MessagePublisher;
 import com.hbasesoft.framework.message.core.event.EventData;
 import com.hbasesoft.framework.message.core.event.EventEmmiter;
 import com.hbasesoft.framework.message.core.event.EventLinsener;
-import com.hbasesoft.framework.message.rocketmq.factory.RocketmqFactory;
 
 /**
  * <Description> <br>
@@ -65,7 +64,7 @@ public class TestEventHandler implements EventLinsener {
     @Override
     public Map<String, Object> subscriberSetting() {
         HashMap<String, Object> stringObjectHashMap = new HashMap<>();
-        stringObjectHashMap.put(RocketmqFactory.CONSUME_TYPE, MessagePublisher.PUBLISH_TYPE_ORDERLY);
+        stringObjectHashMap.put("CONSUME_TYPE", MessagePublisher.PUBLISH_TYPE_ORDERLY);
         return stringObjectHashMap;
     }
 

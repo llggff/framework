@@ -42,7 +42,7 @@ public final class MessageThreadPoolExecutor {
         synchronized (channel) {
             ThreadPoolExecutor executor = executorMap.get(channel);
             if (executor == null) {
-                executor = createThreadPoolExecutor();
+                executor = createThreadPoolExecutor(channel);
                 executorMap.put(channel, executor);
             }
             BlockingQueue<Runnable> bq = executor.getQueue();
@@ -62,12 +62,17 @@ public final class MessageThreadPoolExecutor {
         }
     }
 
-    private static ThreadPoolExecutor createThreadPoolExecutor() {
+    private static ThreadPoolExecutor createThreadPoolExecutor(String channel) {
         ThreadPoolExecutor executor = new ThreadPoolExecutor(
-            PropertyHolder.getIntProperty("message.executor.coreSize", 1), // 设置核心线程数量
-            PropertyHolder.getIntProperty("message.executor.maxPoolSize", 10), // 线程池维护线程的最大数量
-            PropertyHolder.getIntProperty("message.executor.keepAliveSeconds", 600), TimeUnit.SECONDS, // 允许的空闲时间
-            new ArrayBlockingQueue<>(PropertyHolder.getIntProperty("message.executor.queueCapacity", 10))); // 缓存队列
+            PropertyHolder.getIntProperty("message.executor.coreSize." + channel,
+                PropertyHolder.getIntProperty("message.executor.coreSize", 1)), // 设置核心线程数量
+            PropertyHolder.getIntProperty("message.executor.maxPoolSize." + channel,
+                PropertyHolder.getIntProperty("message.executor.maxPoolSize", 10)), // 线程池维护线程的最大数量
+            PropertyHolder.getIntProperty("message.executor.keepAliveSeconds." + channel,
+                PropertyHolder.getIntProperty("message.executor.keepAliveSeconds", 600)),
+            TimeUnit.SECONDS, // 允许的空闲时间
+            new ArrayBlockingQueue<>(PropertyHolder.getIntProperty("message.executor.queueCapacity." + channel,
+                PropertyHolder.getIntProperty("message.executor.queueCapacity", 10)))); // 缓存队列
         return executor;
     }
 }

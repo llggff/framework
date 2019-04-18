@@ -14,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 
 import com.hbasesoft.framework.common.Bootstrap;
+import com.hbasesoft.framework.message.core.event.EventData;
+import com.hbasesoft.framework.message.core.event.EventEmmiter;
 
 /**
  * <Description> <br>
@@ -43,5 +45,17 @@ public class Application {
         Bootstrap.before();
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
         Bootstrap.after(context);
+
+        for (int i = 0; i < 1000; i++) {
+            EventData data = new EventData();
+            data.put("index", i);
+            EventEmmiter.emmit("testEvent", data);
+            try {
+                Thread.sleep(100);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

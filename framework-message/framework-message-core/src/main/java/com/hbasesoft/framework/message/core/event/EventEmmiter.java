@@ -7,6 +7,7 @@ package com.hbasesoft.framework.message.core.event;
 
 import com.hbasesoft.framework.common.utils.bean.SerializationUtil;
 import com.hbasesoft.framework.common.utils.logger.LoggerUtil;
+import com.hbasesoft.framework.common.utils.logger.TransManager;
 import com.hbasesoft.framework.message.core.MessageHelper;
 
 import lombok.AccessLevel;
@@ -45,16 +46,28 @@ public final class EventEmmiter {
      * @taskId <br>
      */
     public static void emmit(String event, EventData data) {
+        if (data != null) {
+            String stackId = TransManager.getInstance().getStackId();
+            data.setEventId(stackId);
+        }
         MessageHelper.createMessagePublisher().publish(event, SerializationUtil.serial(data));
         LoggerUtil.info("触发[event={0},data={1}]事件通知", event, data);
     }
 
     public static void emmit(String event, EventData data, int seconds) {
+        if (data != null) {
+            String stackId = TransManager.getInstance().getStackId();
+            data.setEventId(stackId);
+        }
         MessageHelper.createMessagePublisher().publish(event, SerializationUtil.serial(data), seconds);
         LoggerUtil.info("触发[event={0},data={1}, delayTime={2}]事件通知", event, data, seconds);
     }
 
     public static void emmit(String event, EventData data, String produceModel) {
+        if (data != null) {
+            String stackId = TransManager.getInstance().getStackId();
+            data.setEventId(stackId);
+        }
         MessageHelper.createMessagePublisher().publish(event, SerializationUtil.serial(data), produceModel);
         LoggerUtil.info("触发[event={0},data={1}, produceModel={2}]事件通知", event, data, produceModel);
     }
