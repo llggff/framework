@@ -6,7 +6,6 @@
 		<version>3.3-SNAPSHOT</version>
 	</parent>
 	<artifactId>framework-common</artifactId>
-  <version>3.3-SNAPSHOT</version>
 	<name>${project.artifactId}</name>
 	<description>公共模块</description>
 	<properties>
